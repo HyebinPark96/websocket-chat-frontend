@@ -1,14 +1,27 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const Insert = () => {
+    const navigate = useNavigate();
+
     const insertRoom = () => {
-        axios.post("/chatRoom", { ...roomInfo }, {
-			withCredentials: true // 쿠키 cors 통신 설정
-		}).then((result) => {
-            console.log(result);
-        });
+        axios
+            .post("/chatRoom", { ...roomInfo })
+            .then((result) => {
+                const data = result.data.data;
+                if(data) {
+                    toast.info("채팅방이 생성되었습니다.")
+                    navigate("/chat/list")
+                } else {
+                    toast.warn("채팅방 생성에 실패하였습니다.")
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+                toast.warn("채팅방 생성에 실패하였습니다.")
+            });
     };
 
     const [roomInfo, setRoomInfo] = useState({
