@@ -22,7 +22,7 @@ const LobbyPage = () => {
             })
             .catch((err) => {
                 console.log(err);
-                toast.warn("중복으로 인해 사용 불가능한 사용자명입니다.");
+                toast.warn("오류가 발생했습니다.");
                 setFlag(false);
             });
     };
